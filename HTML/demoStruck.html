@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Demo Struck - IMIN Go-Print</title>
+  <link rel="stylesheet" href="assets/css/basic.css" />
+</head>
+<body>
+  <nav class="nav">
+    <a class="nav-link" href="demoAntrian.html">Demo Antrian</a>
+    <a class="nav-link" href="demoQR.html">Demo QR</a>
+    <a class="nav-link active" href="demoStruck.html">Demo Struck</a>
+  </nav>
+
+  <main class="container">
+    <section class="card">
+      <h1>Demo Struck</h1>
+      <p>Contoh struk kasir sederhana untuk demo printing.</p>
+
+      <pre id="receiptPreview" class="receipt"></pre>
+
+      <div class="controls">
+        <button id="btnNext" type="button">Order Berikutnya</button>
+        <button id="btnPrint" type="button">Print</button>
+      </div>
+
+      <div class="controls small">
+        <label>Jumlah print <input id="printLoopCount" type="number" min="1" max="5" value="1" /></label>
+        <label><input id="enableDelay" type="checkbox" /> Delay 8 detik</label>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Dokumentasi untuk Programmer</h2>
+      <p>Hal penting supaya struk bisa diprint dengan benar:</p>
+      <pre><code>1) Load library print
+&lt;script src="assets/js/printCommon.js"&gt;&lt;/script&gt;
+
+2) Harus ada iframe sebagai print sink
+&lt;iframe id="printSink" class="print-sink"&gt;&lt;/iframe&gt;
+
+3) Payload print berupa daftar commandParts (string)
+const printer = new PrintLib();
+const commandParts = [
+  "COMMANDS.TEXT_FORMAT.TXT_ALIGN_CT",
+  PrintLib.wrap("BoostechLab Coffee\n")
+];
+
+4) Kirim ke iframe lalu panggil print()
+printer.printParts(commandParts);
+
+5) Urutan script demo
+&lt;script src="assets/js/demoStruck.js"&gt;&lt;/script&gt;</code></pre>
+      <p>Catatan: isi commandParts bisa disusun sesuai layout struk. Formatnya tetap mengikuti helper COMMANDS.</p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span>IMIN Go-Print Demo Struck</span>
+    <span id="yearNow"></span>
+  </footer>
+
+  <iframe id="printSink" class="print-sink"></iframe>
+
+  <script src="assets/js/printCommon.js"></script>
+  <script src="assets/js/demoStruck.js"></script>
+</body>
+</html>

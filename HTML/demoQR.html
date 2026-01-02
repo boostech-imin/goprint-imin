@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Demo QR Antrian - IMIN Go-Print</title>
+  <link rel="stylesheet" href="assets/css/basic.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+</head>
+<body>
+  <nav class="nav">
+    <a class="nav-link" href="demoAntrian.html">Demo Antrian</a>
+    <a class="nav-link active" href="demoQR.html">Demo QR</a>
+    <a class="nav-link" href="demoStruck.html">Demo Struck</a>
+  </nav>
+
+  <main class="container">
+    <section class="card">
+      <h1>Demo QR Antrian</h1>
+      <p>Tiket antrian dengan QR code untuk demo printing.</p>
+
+      <div class="ticket">
+        <div class="ticket-row">
+          <span class="label">Nomor</span>
+          <span id="ticketCode">A-057</span>
+        </div>
+        <div class="ticket-row">
+          <span class="label">Loket</span>
+          <span id="ticketDesk">Loket A</span>
+        </div>
+        <div class="ticket-row">
+          <span class="label">Waktu</span>
+          <span id="ticketTime">--</span>
+        </div>
+        <div class="ticket-row">
+          <span class="label">Catatan</span>
+          <span id="ticketNote">Terima kasih, harap menunggu panggilan.</span>
+        </div>
+      </div>
+
+      <div class="controls">
+        <div class="qr-preview" id="qrcodeContainer"></div>
+      </div>
+
+      <div class="controls">
+        <button id="btnNext" type="button">Nomor Berikutnya</button>
+        <button id="btnPrint" type="button">Print</button>
+      </div>
+
+      <div class="controls small">
+        <label>Jumlah print <input id="printLoopCount" type="number" min="1" max="5" value="1" /></label>
+        <label><input id="enableDelay" type="checkbox" /> Delay 8 detik</label>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Dokumentasi untuk Programmer</h2>
+      <p>Hal penting supaya demo QR bisa dimuat dan diprint:</p>
+      <pre><code>1) Load library print
+&lt;script src="assets/js/printCommon.js"&gt;&lt;/script&gt;
+
+2) Library QR wajib di-load sebelum demo QR
+&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"&gt;&lt;/script&gt;
+
+3) Harus ada iframe sebagai print sink
+&lt;iframe id="printSink" class="print-sink"&gt;&lt;/iframe&gt;
+
+4) Payload print berisi COMMANDS.QR()
+const printer = new PrintLib();
+const commandParts = [
+  "COMMANDS.TEXT_FORMAT.TXT_ALIGN_CT",
+  `COMMANDS.QR("${currentCode}", { align: "CENTER", moduleSize: 6, margin: 4, ecc: "M" })`
+];
+
+5) Kirim ke iframe lalu panggil print()
+printer.printParts(commandParts);
+
+6) Urutan script demo
+&lt;script src="assets/js/demoQR.js"&gt;&lt;/script&gt;</code></pre>
+      <p>Catatan: QR di browser hanya preview. Printer menggunakan perintah COMMANDS.QR() saat print.</p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span>IMIN Go-Print Demo QR</span>
+    <span id="yearNow"></span>
+  </footer>
+
+  <iframe id="printSink" class="print-sink"></iframe>
+
+  <script src="assets/js/printCommon.js"></script>
+  <script src="assets/js/demoQR.js"></script>
+</body>
+</html>

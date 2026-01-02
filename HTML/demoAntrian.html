@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Demo Antrian - IMIN Go-Print</title>
+  <link rel="stylesheet" href="assets/css/basic.css" />
+</head>
+<body>
+  <nav class="nav">
+    <a class="nav-link active" href="demoAntrian.html">Demo Antrian</a>
+    <a class="nav-link" href="demoQR.html">Demo QR</a>
+    <a class="nav-link" href="demoStruck.html">Demo Struck</a>
+  </nav>
+
+  <main class="container">
+    <section class="card">
+      <h1>Demo Antrian</h1>
+      <p>Contoh tiket antrian sederhana untuk demo printing.</p>
+
+      <div class="ticket">
+        <div class="ticket-row">
+          <span class="label">Nomor</span>
+          <span id="ticketCode">A-057</span>
+        </div>
+        <div class="ticket-row">
+          <span class="label">Loket</span>
+          <span id="ticketDesk">Loket A</span>
+        </div>
+        <div class="ticket-row">
+          <span class="label">Waktu</span>
+          <span id="ticketTime">--</span>
+        </div>
+        <div class="ticket-row">
+          <span class="label">Catatan</span>
+          <span id="ticketNote">Terima kasih, harap menunggu panggilan.</span>
+        </div>
+      </div>
+
+      <div class="controls">
+        <button id="btnNext" type="button">Nomor Berikutnya</button>
+        <button id="btnPrint" type="button">Print</button>
+      </div>
+
+      <div class="controls small">
+        <label>Jumlah print <input id="printLoopCount" type="number" min="1" max="5" value="1" /></label>
+        <label><input id="enableDelay" type="checkbox" /> Delay 8 detik</label>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Dokumentasi untuk Programmer</h2>
+      <p>Hal penting supaya demo print berjalan dengan benar:</p>
+      <pre><code>1) Load library print
+&lt;script src="assets/js/printCommon.js"&gt;&lt;/script&gt;
+
+2) Harus ada iframe sebagai print sink
+&lt;iframe id="printSink" class="print-sink"&gt;&lt;/iframe&gt;
+
+3) Payload print berupa daftar commandParts (string)
+const printer = new PrintLib();
+const commandParts = [
+  "COMMANDS.TEXT_FORMAT.TXT_ALIGN_CT",
+  PrintLib.wrap("NOMOR ANTRIAN\n")
+];
+
+4) Kirim ke iframe lalu panggil print()
+printer.printParts(commandParts);
+
+5) Urutan script demo
+&lt;script src="assets/js/demoAntrian.js"&gt;&lt;/script&gt;</code></pre>
+      <p>Catatan: commandParts wajib mengikuti format helper COMMANDS milik IMIN Go-Print agar printer bisa membaca perintahnya.</p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span>IMIN Go-Print Demo Antrian</span>
+    <span id="yearNow"></span>
+  </footer>
+
+  <iframe id="printSink" class="print-sink"></iframe>
+
+  <script src="assets/js/printCommon.js"></script>
+  <script src="assets/js/demoAntrian.js"></script>
+</body>
+</html>
